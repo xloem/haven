@@ -309,6 +309,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         preferences.setActivateVideoMonitoring(videoMonitoringActive);
 
+        boolean videoContinuous = ((SwitchPreference) findPreference("video_continuous")).isChecked();
+
+        preferences.setVideoContinuous(videoContinuous);
+
         boolean remoteNotificationActive =
                 ((SwitchPreference) findPreference(PreferenceManager.REMOTE_NOTIFICATION_ACTIVE)).isChecked();
         preferences.setRemoteNotificationActive(remoteNotificationActive);

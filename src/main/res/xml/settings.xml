@@ -37,6 +37,12 @@
             android:defaultValue="false"
             android:key="@string/video_active_preference_key"
             android:title="@string/video_monitoring"/>
+
+        <SwitchPreference
+            app:iconSpaceReserved="false"
+            android:defaultValue="false"
+            android:key="video_continuous"
+            android:title="@string/video_continuous"/>
     </PreferenceCategory>
 
     <PreferenceCategory

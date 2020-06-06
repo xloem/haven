@@ -237,6 +237,15 @@ public class PreferenceManager {
         return appSharedPrefs.getBoolean(context.getResources().getString(R.string.video_active_preference_key), false);
     }
 
+    public void setVideoContinuous(boolean continuous) {
+        prefsEditor.putBoolean("video_continuous", continuous);
+        prefsEditor.commit();
+    }
+
+    public boolean getVideoContinuous() {
+        return appSharedPrefs.getBoolean("video_continuous", false);
+    }
+
     public void activateCamera(boolean active) {
     	prefsEditor.putBoolean(CAMERA_ACTIVE, active);
     	prefsEditor.commit();

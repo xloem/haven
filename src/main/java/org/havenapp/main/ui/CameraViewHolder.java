@@ -177,7 +177,7 @@ public class CameraViewHolder {
                 //store the still match frame, even if doing video
                 serviceMessenger.send(message);
 
-                if (prefs.getVideoMonitoringActive() && (!doingVideoProcessing)) {
+                if (prefs.getVideoMonitoringActive()) {
                     recordVideo();
 
                 }
@@ -350,11 +350,31 @@ public class CameraViewHolder {
         }
     }
 
+    private Runnable terminateVideo;
+
+    private void postVideoTermination() {
+        if (terminateVideo == null) {
+            terminateVideo = () -> {
+                doingVideoProcessing = false;
+                finishVideoEncoding();
+            };
+        } else {
+            updateHandler.removeCallbacks(terminateVideo);
+        }
+        int seconds = prefs.getMonitoringTime() * 1000;
+        updateHandler.postDelayed(terminateVideo, seconds);
+    }
 
 	private synchronized boolean recordVideo() {
 
-	    if (doingVideoProcessing)
-	        return false;
+	    if (doingVideoProcessing) {
+            if (prefs.getVideoContinuous()) {
+                postVideoTermination();
+                return true;
+            } else {
+    	        return false;
+            }
+        }
         String ts1 = new SimpleDateFormat(Utils.DATE_TIME_PATTERN,
                 Locale.getDefault()).format(new Date());
         File fileStoragePath = new File(Environment.getExternalStorageDirectory(),prefs.getDefaultMediaStoragePath());
@@ -380,11 +400,7 @@ public class CameraViewHolder {
 
         doingVideoProcessing = true;
 
-        int seconds = prefs.getMonitoringTime() * 1000;
-        updateHandler.postDelayed(() -> {
-           doingVideoProcessing = false;
-            finishVideoEncoding();
-        }, seconds);
+        postVideoTermination();
 
         return true;
     }

@@ -104,6 +104,7 @@
     <string name="video_active_preference_key" translatable="false">video_active_preference_key</string>
     <string name="config_video_length_label">Set Video Monitoring Length</string>
     <string name="video_monitoring">Video Monitoring</string>
+    <string name="video_continuous">Continuous Video</string>
     <string name="video_settings">Video Settings</string>
     <string name="camera_sensitivity">Camera Sensitivity</string>
     <string name="notification_time">Notification Time Interval</string>
